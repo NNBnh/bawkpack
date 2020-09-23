@@ -42,10 +42,10 @@ awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
 
 # Start
 for pm in $pms; do
-	if [ -n "$(cat "$bawkpack_cache")" ]; then
+	if [ -n "$(awk '{print}' "$bawkpack_cache")" ]; then
 		case $pm in
 			'Pacman')    pm_launcher='sudo pacman --sync --refresh --noconfirm --needed' ; pm_mark='PAC' ;;
-			'APT')       pm_launcher='sudo apt install --assume-yes'                     ; pm_mark='APT' ;;
+			'APT')       pm_launcher='sudo apt install --assume-yes'                     ; pm_mark='APT' ;; #TODO
 			'XBPS')      pm_launcher='sudo xbps-install --sync --yes'                    ; pm_mark='XBP' ;;
 			'AUR')       pm_launcher='yay -Sy --nodiffmenu --save'                       ; pm_mark='AUR' ;; #FIXME
 			'Flatpak')   pm_launcher='sudo flatpak install'                              ; pm_mark='FLA' ;; #FIXME
@@ -54,7 +54,7 @@ for pm in $pms; do
 		esac
 
 		echo "Installing $pm Packages:"
-		$pm_launcher $(cat "$bawkpack_cache" | awk -v FPAT="$pm_mark:[^ ]+" 'NF{ print $1 }' | awk "{gsub(\"$pm_mark:\", \"\");print}")
+		$pm_launcher $(awk -v FPAT="$pm_mark:[^ ]+" 'NF{ print $1 }' "$bawkpack_cache" | awk "{gsub(\"$pm_mark:\", \"\");print}")
 
 		awk "!/$pm_mark:/" "$bawkpack_cache" > "$bawkpack_cache"
 	fi
