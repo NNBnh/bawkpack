@@ -16,6 +16,7 @@
 - [Contents](#contents)
 - [Setup](#setup)
   - [Dependencies](#dependencies)
+    - [Supported Operating System](#supported-operating-system)
     - [To `curl` Bawkpack](#to-curl-bawkpack)
     - [Installation process](#installation-process)
   - [Packages list](#Packages-list)
@@ -23,6 +24,9 @@
 
 ## Setup
 ### Dependencies
+#### Supported Operating System
+\#TODO
+
 #### To `curl` Bawkpack
 - `curl` or `wget` to use [`bawkpack`](https://github.com/NNBnh/bawkpack)
 
@@ -32,7 +36,7 @@
 
 ### Packages list
 
-Create a `packageslist` file:
+Lets take a look at a `packageslist` file example:
 
 ```
 ### Lable (use '#' to comments)
