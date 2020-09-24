@@ -39,7 +39,7 @@
 Lets take a look at a `packageslist` file example:
 
 ```
-### Lable (use '#' to comments)
+### Lable (use "#" to comments)
   APT:kakoune                  PAC:kakoune                  XBP:kakoune                # Comments...
   FLA:org.godotengine.Godot    AUR:godot-bin                XBP:godot                  # Comments...
   SNA:blender                                                                          # Use Snapcraft package on every distro
