@@ -34,9 +34,9 @@ mainpm=${2:-$BAWKPACK_MAINPM}
 [ ! -n "$mainpm" ] && echo 'main packages manager is unset, please `export BAWKPACK_MAINPM=[Pacman|APT|XBPS]`' && exit 1
 bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
-	                         pms="$mainpm"
+                             pms="$mainpm"
 [ "$mainpm"  = 'Pacman' ] && pms="$pms AUR"
-	                         pms="$pms Flatpak"
+                             pms="$pms Flatpak"
 [ "$mainpm" != 'XBPS'   ] && pms="$pms Snapcraft"
 
 
