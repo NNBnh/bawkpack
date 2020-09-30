@@ -30,14 +30,14 @@
 # Values
 list=${1:-$BAWKPACK_LIST}
 mainpm=${2:-$BAWKPACK_MAINPM}
-[ ! -f "$list"   ] && echo 'Packages list is not found, please `export BAWKPACK_FILE=path/to/packages`' && exit 1
+[ ! -f "$list"   ] && echo 'Packages list is not found, please `export BAWKPACK_LIST=path/to/packages`' && exit 1
 [ ! -n "$mainpm" ] && echo 'main packages manager is unset, please `export BAWKPACK_MAINPM=[Pacman|APT|XBPS]`' && exit 1
 bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
                              pms="$mainpm"
 [ "$mainpm"  = 'Pacman' ] && pms="$pms AUR"
                              pms="$pms Flatpak"
-[ "$mainpm" != 'XBPS'   ] && pms="$pms Snapcraft"
+[ "$mainpm" != 'XBPS'   ] && pms="$pms Snap"
 
 
 # Start
@@ -49,7 +49,7 @@ for pm in $pms; do
 			'XBPS')      pm_launcher='sudo xbps-install --sync --yes'                    ; pm_mark='XBP' ;;
 			'AUR')       pm_launcher='yay -Sy --nodiffmenu --save'                       ; pm_mark='AUR' ;; #FIXME
 			'Flatpak')   pm_launcher='sudo flatpak install'                              ; pm_mark='FLA' ;; #FIXME
-			'Snapcraft') pm_launcher='sudo snap install'                                 ; pm_mark='SNA' ;; #FIXME
+			'Snap')      pm_launcher='sudo snap install'                                 ; pm_mark='SNA' ;; #FIXME
 			*)           echo "'$pm' packages manager not found"                         ; exit 1        ;;
 		esac
 
