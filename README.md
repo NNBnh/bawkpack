@@ -7,7 +7,7 @@
 **Bawkpack** is a *SuperB* packages list installer using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible).
 
 ### Features
-- Super **minimum** with exactly [**64** lines of `sh`](bawkpack#L64).
+- Super **minimum** with exactly [**128** lines of `sh`](bawkpack#L128).
 - Super **low** [dependencies](#dependencies)
 
 ## Contents
@@ -51,7 +51,6 @@ First export some values:
 
 ```sh
 export BAWKPACK_FILE=path/to/packageslist
-export BAWKPACK_MAINPM=[Pacman|APT|XBPS] # Choose your main packages manager
 ```
 
 ###### This is unnecessary if you download and use Bawkpack locally.
@@ -72,5 +71,5 @@ Bawkpack can also be use locally:
 
 ```sh
 chmod +x bawkpack
-./bawkpack path/to/packageslist [Pacman|APT|XBPS]
+./bawkpack path/to/packageslist
 ```
