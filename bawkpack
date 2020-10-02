@@ -38,33 +38,36 @@ bawkpack_local="${XDG_CACHE_HOME:-"$HOME/.local/share"}/bawkpack"
 bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
 
+if   [ -f '/bin/pacman'       ]; then mainpm='Pacman'
+elif [ -f '/bin/apt'          ]; then mainpm='APT'
+elif [ -f '/bin/xbps-install' ]; then mainpm='XBPS'
+else                           ; then
+	echo "Packages manager not found"
+	exit 1
+fi
+
                              pms="$mainpm"
 [ "$mainpm"  = 'Pacman' ] && pms="$pms AUR"
                              pms="$pms Flatpak"
 [ "$mainpm" != 'XBPS'   ] && pms="$pms Snap"
 
-if   [ -f '/bin/pacman'       ]; then mainpm='Pacman'
-elif [ -f '/bin/apt'          ]; then mainpm='APT'
-elif [ -f '/bin/xbps-install' ]; then mainpm='XBPS'
-fi
-
 
 # Functions
-setup_pacman() {
+setup_Pacman() {
 	sudo pacman --sync --refresh --sysupgrade --noconfirm --needed
 }
 
-setup_apt() {
+setup_APT() {
 	sudo apt update --assume-yes
 	sudo apt upgrade --assume-yes
 }
 
-setup_xbps() {
+setup_XBPS() {
 	sudo xbps-install --sync --update --yes
 	sudo xbps-install --sync --update --yes void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree void-repo-debug
 }
 
-setup_aur() {
+setup_AUR() {
 	sudo pacman --sync --refresh --noconfirm --needed git base-devel
 
 	git clone https://aur.archlinux.org/yay.git "$bawkpack_local/yay"
@@ -73,7 +76,7 @@ setup_aur() {
 	cd $pwd
 }
 
-setup_flatpak() {
+setup_Flatpak() {
 	if   [ $mainpm = 'Pacman' ]; then sudo pacman --sync --refresh --noconfirm --needed flatpak
 	elif [ $mainpm = 'APT'    ]; then sudo apt install --assume-yes flatpak gnome-software-plugin-flatpak
 	elif [ $mainpm = 'XBPS'   ]; then sudo xbps-install --sync --yes flatpak
@@ -82,7 +85,7 @@ setup_flatpak() {
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 }
 
-setup_snap() {
+setup_Snap() {
 	if   [ $mainpm = 'Pacman' ]; then
 		sudo pacman --sync --refresh --noconfirm --needed git
 
@@ -105,16 +108,16 @@ setup_snap() {
 for pm in $pms; do
 	if [ -n "$(awk '{print}' "$bawkpack_cache")" ]; then
 		case $pm in
-			'Pacman')    pm_launcher='sudo pacman --sync --refresh --noconfirm --needed'; pm_mark='PAC'; setup_pacman  ;;
-			'APT')       pm_launcher='sudo apt install --assume-yes'                    ; pm_mark='APT'; setup_apt     ;;
-			'XBPS')      pm_launcher='sudo xbps-install --sync --yes'                   ; pm_mark='XBP'; setup_xbps    ;;
-			'AUR')       pm_launcher='yay -Sy --nodiffmenu --save'                      ; pm_mark='AUR'; setup_aur     ;;
-			'Flatpak')   pm_launcher='sudo flatpak install'                             ; pm_mark='FLA'; setup_flatpak ;;
-			'Snap')      pm_launcher='sudo snap install'                                ; pm_mark='SNA'; setup_snap    ;;
-			*)           echo "'$pm' packages manager not found"                                       ; exit 1        ;;
+			'Pacman')    pm_launcher='sudo pacman --sync --refresh --noconfirm --needed'; pm_mark='PAC' ;;
+			'APT')       pm_launcher='sudo apt install --assume-yes'                    ; pm_mark='APT' ;;
+			'XBPS')      pm_launcher='sudo xbps-install --sync --yes'                   ; pm_mark='XBP' ;;
+			'AUR')       pm_launcher='yay -Sy --nodiffmenu --save'                      ; pm_mark='AUR' ;;
+			'Flatpak')   pm_launcher='sudo flatpak install'                             ; pm_mark='FLA' ;;
+			'Snap')      pm_launcher='sudo snap install'                                ; pm_mark='SNA' ;;
 		esac
 
 		echo "Installing $pm Packages:"
+		setup_$pm
 		$pm_launcher $(awk -v FPAT="$pm_mark:[^ ]+" 'NF{ print $1 }' "$bawkpack_cache" | awk "{gsub(\"$pm_mark:\", \"\");print}")
 
 		awk "!/$pm_mark:/" "$bawkpack_cache" > "$bawkpack_cache"
@@ -122,7 +125,4 @@ for pm in $pms; do
 done
 
 
-exit 0 #  ________                     __
-       # /_  __/ /  ___   ___ ___  ___/ /
-       #  / / / _ \/ -_) / -_) _ \/ _  /
-       # /_/ /_//_/\__/  \__/_//_/\_,_/
+exit 0
