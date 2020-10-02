@@ -116,7 +116,7 @@ for pm in $pms; do
 			'Snap')      pm_launcher='sudo snap install'                                ; pm_mark='SNA' ;;
 		esac
 
-		echo "BAWKPACK installing $pm Packages:"
+		echo "BAWKPACK: installing $pm Packages"
 		setup_$pm
 		$pm_launcher $(awk -v FPAT="$pm_mark:[^ ]+" 'NF{ print $1 }' "$bawkpack_cache" | awk "{gsub(\"$pm_mark:\", \"\");print}")
 
