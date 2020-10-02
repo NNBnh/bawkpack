@@ -41,7 +41,7 @@ awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
 if   [ -f '/bin/pacman'       ]; then mainpm='Pacman'
 elif [ -f '/bin/apt'          ]; then mainpm='APT'
 elif [ -f '/bin/xbps-install' ]; then mainpm='XBPS'
-else                           ; then
+else
 	echo "Packages manager not found"
 	exit 1
 fi
