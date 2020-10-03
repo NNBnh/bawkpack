@@ -40,7 +40,7 @@ bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 if   [ -f '/bin/pacman' ]; then
 	mainpm='Pacman'
 	sudo pacman --sync --refresh --sysupgrade --noconfirm --needed gawk
-elif [ -f '/bin/apt'  ]; then
+elif [ -f '/usr/bin/apt'  ]; then
 	mainpm='APT'
 	sudo apt update  --assume-yes
 	sudo apt upgrade --assume-yes
