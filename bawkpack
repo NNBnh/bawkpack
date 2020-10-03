@@ -36,7 +36,6 @@ list=${1:-$BAWKPACK_LIST}
 
 bawkpack_local="${XDG_CACHE_HOME:-"$HOME/.local/share"}/bawkpack"
 bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
-awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
 
 if   [ -f '/bin/pacman' ]; then
 	mainpm='Pacman'
@@ -101,6 +100,8 @@ setup_snap() {
 
 
 # Start
+awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
+
 for pm in $pms; do
 	if [ -n "$(awk '{print}' "$bawkpack_cache")" ]; then
 		case $pm in
@@ -120,9 +121,8 @@ for pm in $pms; do
 done
 
 
-exit 0
-#    ______   ____     __    _               ______
-#   <  /__ \ ( __ )   / /   (_)___  ___     / / / /
-#   / /__/ // __  |  / /   / / __ \/ _ \   / / / /
-#  / // __// /_/ /  / /___/ / / / /  __/  /_/_/_/
-# /_//____/\____/  /_____/_/_/ /_/\___/  (_|_|_)
+exit 0 #    ______   ____     __    _               ______
+       #   <  /__ \ ( __ )   / /   (_)___  ___     / / / /
+       #   / /__/ // __  |  / /   / / __ \/ _ \   / / / /
+       #  / // __// /_/ /  / /___/ / / / /  __/  /_/_/_/
+       # /_//____/\____/  /_____/_/_/ /_/\___/  (_|_|_)
