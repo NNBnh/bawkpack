@@ -115,7 +115,7 @@ for pm in $pms; do
 		echo "BAWKPACK: installing $pm Packages"
 		$pm_launcher $(awk -v FPAT="$pm_mark[^ ]+" 'NF{ print $1 }' "$bawkpack_cache" | awk "{gsub(\"$pm_mark\", \"\");print}")
 
-		awk "!/$pm_mark/" "$bawkpack_cache" > "$bawkpack_cache_1" && mv "$bawkpack_cache_1" "$bawkpack_cache"
+		awk "!/$pm_mark/" "$bawkpack_cache" > "${bawkpack_cache}_1" && mv "${bawkpack_cache}_1" "$bawkpack_cache"
 	fi
 done
 
