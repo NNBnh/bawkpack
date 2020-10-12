@@ -34,7 +34,7 @@ pwd="$PWD"
 list=${1:-$BAWKPACK_LIST}
 [ ! -f "$list"   ] && echo 'Packages list is not found, please `export BAWKPACK_LIST=path/to/packages`' && exit 1
 
-bawkpack_local="${XDG_CACHE_HOME:-"$HOME/.local/share"}/bawkpack"
+bawkpack_local="${XDG_DATA_HOME:-"$HOME/.local/share"}/bawkpack"
 bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 
 if   [ -f '/bin/pacman' ]; then
