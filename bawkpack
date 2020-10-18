@@ -102,27 +102,27 @@ setup_snap() {
 awk '{gsub("#.*$", "");print}' "$list" > "$bawkpack_cache"
 
 for pm in $pms; do
-	if [ -n "$(awk '{print}' "$bawkpack_cache")" ]; then
-		case $pm in
-			'Pacman')  pm_launcher='sudo pacman --sync --refresh --noconfirm --needed'; pm_mark='PAC:' ;;
-			'APT')     pm_launcher='sudo apt install --assume-yes'                    ; pm_mark='APT:' ;;
-			'XBPS')    pm_launcher='sudo xbps-install --sync --yes'                   ; pm_mark='XBP:' ;;
-			'AUR')     pm_launcher='yay -Sy --nodiffmenu --save'; setup_aur           ; pm_mark='AUR:' ;;
-			'Flatpak') pm_launcher='sudo flatpak install'       ; setup_flatpak       ; pm_mark='FLA:' ;;
-			'Snap')    pm_launcher='sudo snap install'          ; setup_snap          ; pm_mark='SNA:' ;;
-		esac
-
+	case $pm in
+		'Pacman')  pm_launcher='sudo pacman --sync --refresh --noconfirm --needed'; pm_mark='PAC:' ;;
+		'APT')     pm_launcher='sudo apt install --assume-yes'                    ; pm_mark='APT:' ;;
+		'XBPS')    pm_launcher='sudo xbps-install --sync --yes'                   ; pm_mark='XBP:' ;;
+		'AUR')     pm_launcher='yay -Sy --nodiffmenu --save'; setup_aur           ; pm_mark='AUR:' ;;
+		'Flatpak') pm_launcher='sudo flatpak install'       ; setup_flatpak       ; pm_mark='FLA:' ;;
+		'Snap')    pm_launcher='sudo snap install'          ; setup_snap          ; pm_mark='SNA:' ;;
+	esac
+	pl=$(awk -v FPAT="$pm_mark[^ ]+" 'NF{ print $1 }' "$bawkpack_cache" | awk "{gsub(\"$pm_mark\", \"\");print}")
+		
+	if [ -n "$pl" ]; then
 		echo "BAWKPACK: installing $pm Packages"
-		$pm_launcher $(awk -v FPAT="$pm_mark[^ ]+" 'NF{ print $1 }' "$bawkpack_cache" | awk "{gsub(\"$pm_mark\", \"\");print}")
+		$pm_launcher $pl
 
-		awk "!/$pm_mark/" "$bawkpack_cache" > "${bawkpack_cache}_1" && mv "${bawkpack_cache}_1" "$bawkpack_cache"
+		awk "!/$pm_mark/" "$bawkpack_cache" > "${bawkpack_cache}_temp" && mv "${bawkpack_cache}_temp" "$bawkpack_cache"
 	fi
 done
 
 
-exit 0
-#    ______   ____     __    _               ______
-#   <  /__ \ ( __ )   / /   (_)___  ___     / / / /
-#   / /__/ // __  |  / /   / / __ \/ _ \   / / / /
-#  / // __// /_/ /  / /___/ / / / /  __/  /_/_/_/
-# /_//____/\____/  /_____/_/_/ /_/\___/  (_|_|_)
+exit 0 #    ______   ____     __    _               ______
+       #   <  /__ \ ( __ )   / /   (_)___  ___     / / / /
+       #   / /__/ // __  |  / /   / / __ \/ _ \   / / / /
+       #  / // __// /_/ /  / /___/ / / / /  __/  /_/_/_/
+       # /_//____/\____/  /_____/_/_/ /_/\___/  (_|_|_)
