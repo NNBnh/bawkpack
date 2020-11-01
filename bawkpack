@@ -37,15 +37,15 @@ bawkpack_list=${1:-$BAWKPACK_LIST}
 bawkpack_local="${XDG_DATA_HOME:-"$HOME/.local/share"}/bawkpack"
 bawkpack_cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 
-if   [ -f '/bin/pacman' ]; then
+if type pacman; then
 	packagemanager_main='Pacman'
 	sudo pacman --sync --refresh --sysupgrade --noconfirm --needed gawk
-elif [ -f '/usr/bin/apt'  ]; then
+elif type apt; then
 	packagemanager_main='APT'
 	sudo apt update  --assume-yes
 	sudo apt upgrade --assume-yes
 	sudo apt install --assume-yes gawk
-elif [ -f '/bin/xbps-install' ]; then
+elif type xbps-install; then
 	packagemanager_main='XBPS'
 	sudo xbps-install --sync --yes --update
 	sudo xbps-install --sync --yes void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree void-repo-debug gawk
