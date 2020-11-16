@@ -65,9 +65,9 @@ setup_aur() {
 
 	sudo pacman --sync --refresh --noconfirm --needed git base-devel
 	git clone https://aur.archlinux.org/yay.git "$BAWKPACK_LOCAL/yay"
-	cd "$BAWKPACK_LOCAL/yay"
+	cd "$BAWKPACK_LOCAL/yay" || exit 1
 	makepkg -si
-	cd $WD
+	cd "$WD" || exit 1
 }
 
 setup_flatpak() {
@@ -87,9 +87,9 @@ setup_snap() {
 		sudo pacman --sync --refresh --noconfirm --needed git
 
 		git clone https://aur.archlinux.org/snapd.git "$BAWKPACK_LOCAL/snap"
-		cd "$BAWKPACK_LOCAL/snap"
+		cd "$BAWKPACK_LOCAL/snap" || exit 1
 		makepkg -si
-		cd $WD
+		cd "$WD" || exit 1
 
 		sudo systemctl enable --now snapd.socket
 		sudo ln -s /var/lib/snapd/snap /snap
@@ -112,12 +112,12 @@ for packagemanager in $packagemanager_list; do
 		'Flatpak') packagemanager_command='sudo flatpak install'       ; setup_flatpak       ; packagemanager_mark='FLA:' ;;
 		'Snap')    packagemanager_command='sudo snap install'          ; setup_snap          ; packagemanager_mark='SNA:' ;;
 	esac
-	packages_list=$(awk -v FPAT="$packagemanager_mark[^ ]+" 'NF{ print $1 }' "$BAWKPACK_CACHE" | awk "{gsub(\"$packagemanager_mark\", \"\");print}")
+	packages_list=$(awk -v FPAT="${packagemanager_mark}[^ ]+" 'NF{ print $1 }' "$BAWKPACK_CACHE" | awk "{gsub(\"$packagemanager_mark\", \"\");print}")
 
 	if [ -n "$packages_list" ]; then
 		if [ "*$packagemanager*" != "$packagemanager_not" ]; then
 			echo "BAWKPACK: installing $packagemanager Packages"
-			$packagemanager_command $packages_list
+			$packagemanager_command "$packages_list"
 		fi
 
 		awk "!/$packagemanager_mark/" "$BAWKPACK_CACHE" > "${BAWKPACK_CACHE}_temp" && mv "${BAWKPACK_CACHE}_temp" "$BAWKPACK_CACHE"
