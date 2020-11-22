@@ -19,7 +19,7 @@
     - [Supported Operating System](#supported-operating-system)
     - [To `curl` Bawkpack](#to-curl-bawkpack)
     - [Installation process](#installation-process)
-  - [Packages list](#Packages-list)
+  - [Packages list](#packages-list)
 - [Usage](#usage)
 
 ## Setup
