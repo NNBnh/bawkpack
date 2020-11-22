@@ -19,13 +19,15 @@
     - [Supported Operating System](#supported-operating-system)
     - [To `curl` Bawkpack](#to-curl-bawkpack)
     - [Installation process](#installation-process)
-  - [Packages list](#packages-list)
+  - [Packages list](#Packages-list)
 - [Usage](#usage)
 
 ## Setup
 ### Dependencies
-#### Supported Operating System
-\#TODO
+#### Supported package managers
+- [APT](https://wiki.debian.org/Apt)
+- [PACMAN](https://wiki.archlinux.org/index.php/Pacman)
+- [XBPS](https://docs.voidlinux.org/xbps/index.html)
 
 #### To `curl` Bawkpack
 - `curl` or `wget` to use [`bawkpack`](https://github.com/NNBnh/bawkpack)
@@ -35,7 +37,6 @@
 - `awk` to read packages file
 
 ### Packages list
-
 Lets take a look at a `packageslist` file example:
 
 ```
@@ -47,15 +48,7 @@ Lets take a look at a `packageslist` file example:
 ```
 
 ## Usage
-First export some values:
-
-```sh
-export BAWKPACK_FILE=path/to/packageslist
-```
-
-###### This is unnecessary if you download and use Bawkpack locally.
-
-Then `curl` Bawkpack:
+First `curl` Bawkpack:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/NNBnh/bawkpack/master/bawkpack | sh
