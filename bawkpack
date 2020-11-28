@@ -32,24 +32,22 @@
 WD=$PWD
 BAWKPACK_LIST=${1:-$BAWKPACK_LIST}; [ ! -f "$BAWKPACK_LIST" ] && echo 'Packages list is not found' && exit 1
 BAWKPACK_LOCAL="${XDG_DATA_HOME:-"$HOME/.local/share"}/bawkpack"
-BAWKPACK_CACHE="${XDG_CACHE_HOME:-"$HOME/.cache"}/bawkpack_cache"
 
 if type pacman; then
 	packagemanager_main='Pacman'
-	sudo pacman --sync --refresh --sysupgrade --noconfirm --needed gawk
 elif type apt; then
 	packagemanager_main='APT'
 	sudo apt update  --assume-yes
 	sudo apt upgrade --assume-yes
-	sudo apt install --assume-yes gawk
 elif type xbps-install; then
 	packagemanager_main='XBPS'
 	sudo xbps-install --sync --yes --update
-	sudo xbps-install --sync --yes void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree void-repo-debug gawk
+	sudo xbps-install --sync --yes void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree void-repo-debug
 else
 	echo "Packages manager not found"
 	exit 1
 fi
+
 packagemanager_all='Pacman APT XBPS'
 packagemanager_not=${packagemanager_all%%$packagemanager_main}
                                           packagemanager_list="$packagemanager_list packagemanager_main"
@@ -77,6 +75,7 @@ setup_flatpak() {
 	elif [ $packagemanager_main = 'APT'    ]; then sudo apt install --assume-yes flatpak gnome-software-plugin-flatpak
 	elif [ $packagemanager_main = 'XBPS'   ]; then sudo xbps-install --sync --yes flatpak
 	fi
+
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 }
 
@@ -96,31 +95,32 @@ setup_snap() {
 	elif [ $packagemanager_main = 'APT' ]; then
 		sudo apt install --assume-yes snapd
 	fi
+
 	snap install core
 }
 
 
 # Start
-awk '{gsub("#.*$", "");print}' "$BAWKPACK_LIST" > "$BAWKPACK_CACHE"
+bawkpack_cache=$(sed -n -e 's/#.*$//g' -f "$BAWKPACK_LIST")
 
 for packagemanager in $packagemanager_list; do
-	case $packagemanager in
-		'Pacman')  packagemanager_command='sudo pacman --sync --refresh --noconfirm --needed'; packagemanager_mark='PAC:' ;;
-		'APT')     packagemanager_command='sudo apt install --assume-yes'                    ; packagemanager_mark='APT:' ;;
-		'XBPS')    packagemanager_command='sudo xbps-install --sync --yes'                   ; packagemanager_mark='XBP:' ;;
-		'AUR')     packagemanager_command='yay -Sy --nodiffmenu --save'; setup_aur           ; packagemanager_mark='AUR:' ;;
-		'Flatpak') packagemanager_command='sudo flatpak install'       ; setup_flatpak       ; packagemanager_mark='FLA:' ;;
-		'Snap')    packagemanager_command='sudo snap install'          ; setup_snap          ; packagemanager_mark='SNA:' ;;
-	esac
-	packages_list=$(awk -v FPAT="${packagemanager_mark}[^ ]+" 'NF{ print $1 }' "$BAWKPACK_CACHE" | awk "{gsub(\"$packagemanager_mark\", \"\");print}")
+	if [ -n "$bawkpack_cache" ]; then
+		case $packagemanager in
+			'Pacman')  packagemanager_command='sudo pacman --sync --refresh --noconfirm --needed'; packagemanager_mark='PAC:' ;;
+			'APT')     packagemanager_command='sudo apt install --assume-yes'                    ; packagemanager_mark='APT:' ;;
+			'XBPS')    packagemanager_command='sudo xbps-install --sync --yes'                   ; packagemanager_mark='XBP:' ;;
+			'AUR')     packagemanager_command='yay -Sy --nodiffmenu --save'; setup_aur           ; packagemanager_mark='AUR:' ;;
+			'Flatpak') packagemanager_command='sudo flatpak install'       ; setup_flatpak       ; packagemanager_mark='FLA:' ;;
+			'Snap')    packagemanager_command='sudo snap install'          ; setup_snap          ; packagemanager_mark='SNA:' ;;
+		esac
 
-	if [ -n "$packages_list" ]; then
+		packages_list=$(printf "$bawkpack_cache" | sed -n -e "s/^.*$packagemanager_mark//g" -e 's/[[:space:]].*$//g')
+		bawkpack_cache=$(printf "$bawkpack_cache" | sed -n -e "s/$packagemanager_mark//g")
+
 		if [ "*$packagemanager*" != "$packagemanager_not" ]; then
 			echo "BAWKPACK: installing $packagemanager Packages"
 			$packagemanager_command "$packages_list"
 		fi
-
-		awk "!/$packagemanager_mark/" "$BAWKPACK_CACHE" > "${BAWKPACK_CACHE}_temp" && mv "${BAWKPACK_CACHE}_temp" "$BAWKPACK_CACHE"
 	fi
 done
 
