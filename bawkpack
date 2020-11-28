@@ -101,7 +101,7 @@ setup_snap() {
 
 
 # Start
-bawkpack_cache=$(sed -n -e 's/#.*$//g' -f "$BAWKPACK_LIST")
+bawkpack_cache=$(sed -e 's/#.*$//g' -f "$BAWKPACK_LIST")
 
 for packagemanager in $packagemanager_list; do
 	if [ -n "$bawkpack_cache" ]; then
@@ -114,8 +114,8 @@ for packagemanager in $packagemanager_list; do
 			'Snap')    packagemanager_command='sudo snap install'          ; setup_snap          ; packagemanager_mark='SNA:' ;;
 		esac
 
-		packages_list=$(printf "$bawkpack_cache" | sed -n -e "s/^.*$packagemanager_mark//g" -e 's/[[:space:]].*$//g')
-		bawkpack_cache=$(printf "$bawkpack_cache" | sed -n -e "s/$packagemanager_mark//g")
+		packages_list=$(printf "$bawkpack_cache" | sed -e "s/^.*$packagemanager_mark//g" -e 's/[[:space:]].*$//g')
+		bawkpack_cache=$(printf "$bawkpack_cache" | sed -e "s/$packagemanager_mark//g")
 
 		if [ "*$packagemanager*" != "$packagemanager_not" ]; then
 			echo "BAWKPACK: installing $packagemanager Packages"
