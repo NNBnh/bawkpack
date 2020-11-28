@@ -4,10 +4,10 @@
 <p align="center"><img src="https://img.shields.io/github/watchers/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/stars/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/forks/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/issues/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"></p>
 
 ## About
-**Bawkpack** is a *SuperB* packages list installer using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible).
+**Bawkpack** is a *SuperB* packages list ~~installer using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and~~ written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible).
 
 ### Features
-- Super **minimum** with exactly [**128** lines of `sh`](bawkpack#L128).
+- Super **minimum** with exactly [**128** lines of `sh`](bawkpack#L128) and [**no dependencies**](#dependencies) (if you don't count `sh`).
 - Super **low** [dependencies](#dependencies)
 
 ## Contents
@@ -34,7 +34,7 @@
 
 #### Installation process
 - `sh` to process
-- `awk` to read packages file
+- ~~`awk` to read packages file~~ Bawkpack doesn't need `awk` anymore...
 
 ### Packages list
 Lets take a look at a `packageslist` file example:
