@@ -35,6 +35,7 @@ BAWKPACK_LOCAL="${XDG_DATA_HOME:-"$HOME/.local/share"}/bawkpack"
 
 if type pacman; then
 	PACKAGEMANAGER_MAIN='Pacman'
+	sudo pacman --sync --sysupgrade --refresh --noconfirm --needed
 elif type apt; then
 	PACKAGEMANAGER_MAIN='APT'
 	sudo apt update  --assume-yes
@@ -49,9 +50,9 @@ else
 fi
 
 PACKAGEMANAGER_ALL='Pacman APT XBPS'
-PACKAGEMANAGER_NOT=${PACKAGEMANAGER_ALL%%$PACKAGEMANAGER_MAIN}
-                                          PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST PACKAGEMANAGER_MAIN"
-                                          PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST PACKAGEMANAGER_NOT"
+PACKAGEMANAGER_NOT=${PACKAGEMANAGER_ALL#$PACKAGEMANAGER_MAIN}
+                                          PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST $PACKAGEMANAGER_MAIN"
+                                          PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST $PACKAGEMANAGER_NOT"
 [ "$PACKAGEMANAGER_MAIN"  = 'Pacman' ] && PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST AUR"
                                           PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST Flatpak"
 [ "$PACKAGEMANAGER_MAIN" != 'XBPS'   ] && PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST Snap"
@@ -69,7 +70,6 @@ setup_aur() {
 
 setup_flatpak() {
 	echo "BAWKPACK: installing Flatpak"
-
 	if   [ $PACKAGEMANAGER_MAIN = 'Pacman' ]; then sudo pacman --sync --refresh --noconfirm --needed flatpak
 	elif [ $PACKAGEMANAGER_MAIN = 'APT'    ]; then sudo apt install --assume-yes flatpak gnome-software-plugin-flatpak
 	elif [ $PACKAGEMANAGER_MAIN = 'XBPS'   ]; then sudo xbps-install --sync --yes flatpak
@@ -80,7 +80,6 @@ setup_flatpak() {
 
 setup_snap() {
 	echo "BAWKPACK: installing Snap"
-	
 	if   [ $PACKAGEMANAGER_MAIN = 'Pacman' ]; then
 		sudo pacman --sync --refresh --noconfirm --needed git
 		git clone https://aur.archlinux.org/snapd.git "$BAWKPACK_LOCAL/snap"
@@ -98,27 +97,28 @@ setup_snap() {
 
 
 # Start
-bawkpack_process=$(sed -e 's/#.*$//g' -f "$BAWKPACK_LIST")
+bawkpack_process=$(sed -e 's/#.*$//g' "$BAWKPACK_LIST")
 
 for packagemanager in $PACKAGEMANAGER_LIST; do
 	if [ -n "$bawkpack_process" ]; then
 		case $packagemanager in
-			'Pacman')  packagemanager_command='sudo pacman --sync --refresh --noconfirm --needed'; packagemanager_mark='PAC:' ;;
-			'APT')     packagemanager_command='sudo apt install --assume-yes'                    ; packagemanager_mark='APT:' ;;
-			'XBPS')    packagemanager_command='sudo xbps-install --sync --yes'                   ; packagemanager_mark='XBP:' ;;
-			'AUR')     packagemanager_command='yay -Sy --nodiffmenu --save'; setup_aur           ; packagemanager_mark='AUR:' ;;
-			'Flatpak') packagemanager_command='sudo flatpak install'       ; setup_flatpak       ; packagemanager_mark='FLA:' ;;
-			'Snap')    packagemanager_command='sudo snap install'          ; setup_snap          ; packagemanager_mark='SNA:' ;;
+			'Pacman')  packagemanager_command='sudo pacman --sync --refresh --noconfirm --needed'     ; packagemanager_mark='PAC:' ;;
+			'APT')     packagemanager_command='sudo apt install --assume-yes'                         ; packagemanager_mark='APT:' ;;
+			'XBPS')    packagemanager_command='sudo xbps-install --sync --yes'                        ; packagemanager_mark='XBP:' ;;
+			'AUR')     packagemanager_command='yay -Sy --nodiffmenu --save --noconfirm'; setup_aur    ; packagemanager_mark='AUR:' ;;
+			'Flatpak') packagemanager_command='sudo flatpak install'                   ; setup_flatpak; packagemanager_mark='FLA:' ;;
+			'Snap')    packagemanager_command='sudo snap install'                      ; setup_snap   ; packagemanager_mark='SNA:' ;;
 		esac
 
 		packages_list=$(printf "$bawkpack_process" | sed -e "s/^.*$packagemanager_mark//g" -e 's/[[:space:]].*$//g')
+
 		bawkpack_process=$(printf "$bawkpack_process" | sed -e "s/$packagemanager_mark//g")
 
-		case "$packagemanager" in
-			*$PACKAGEMANAGER_NOT*) ;;
+		case "$PACKAGEMANAGER_NOT" in
+			*$packagemanager*) ;;
 			*)
 				echo "BAWKPACK: installing $packagemanager Packages"
-				$packagemanager_command "$packages_list"
+				$packagemanager_command $packages_list
 			;;
 		esac
 	fi
