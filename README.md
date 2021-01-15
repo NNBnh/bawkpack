@@ -1,10 +1,12 @@
+> ## *Bawkpack* is hosted on [*SuperB Bootstrap*](https://github.com/NNBnh/superb-bootstrap), this repository is now a documents only.
+
 <h1 align="center"><i>Bawkpack</i></h1>
 <p align="center">Packages list installer that <i>SuperB</i></p>
-<p align="center"><img src="https://img.shields.io/github/license/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=for-the-badge" alt="License: GPL-3.0"> <img src="https://img.shields.io/github/languages/top/NNBnh/b.sh?logo=gnu-bash&labelColor=073551&color=4EAA25&logoColor=FFFFFF&style=for-the-badge" alt="Shell: 100%"> <img src="https://img.shields.io/badge/curl-able-%234EAA25.svg?labelColor=073551&style=for-the-badge&logo=curl&logoColor=FFFFFF" alt="Curlable"> <img src="https://img.shields.io/github/last-commit/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=for-the-badge"></p>
+<p align="center"><img src="https://img.shields.io/github/license/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=for-the-badge" alt="License: GPL-3.0"> <img src="https://img.shields.io/github/languages/top/NNBnh/b.sh?logo=gnu-bash&labelColor=073551&color=4EAA25&logoColor=FFFFFF&style=for-the-badge" alt="Shell: 100%"></p>
 <p align="center"><img src="https://img.shields.io/github/watchers/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/stars/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/forks/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/issues/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"></p>
 
 ## About
-**Bawkpack** is a *SuperB* packages list installer ~~using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and~~ written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible). **Bawkpack** is exactly [**128** lines of `sh`](bawkpack#L128) with [**no dependencies**](#dependencies) (if you don't count `sh`).
+**Bawkpack** is a *SuperB* packages list installer ~~using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and~~ written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible). **Bawkpack** is exactly [**128** lines of `sh`](https://github.com/NNBnh/superb-bootstrap/blob/master/extra/bawkpack#L128) with [**no dependencies**](#dependencies) (if you don't count `sh`).
 
 ### Purpose
 
@@ -21,6 +23,22 @@ bpack install godot
 |[APT](https://wiki.debian.org/Apt)|`apt install godot3`|
 |[AUR](https://wiki.archlinux.org/index.php/Arch_User_Repository)|`yay -Sy godot-bin`|
 |[XBPS](https://docs.voidlinux.org/xbps/index.html)|`xbps-install --sync godot`|
+
+it's package repository will be a `.json` or `.toml` file kile this:
+
+```toml
+[godot]
+description = "An advanced, feature packed, multi-platform 2D and 3D game engine"
+url = "http://www.godotengine.org"
+licenses = "MIT"
+apt = "godot3"
+aur = "godot-bin"
+xbps = "godot"
+
+# ...
+```
+
+People can help add or improve packages on package repository like how [Launchbox](https://gamesdb.launchbox-app.com) manager it database.
 
 ###### Hope someone make this dream come true
 
