@@ -43,6 +43,7 @@ People can help add or improve packages on package repository like how [Launchbo
 ###### Hope someone make this dream come true
 
 ## Contents
+
 - [About](#about)
   - [Purpose](#purpose)
 - [Contents](#contents)
@@ -57,11 +58,10 @@ People can help add or improve packages on package repository like how [Launchbo
 ## Setup
 ### Dependencies
 #### Supported package managers
+
 - [APT](https://wiki.debian.org/Apt)
 - [Pacman](https://wiki.archlinux.org/index.php/Pacman)
 - [XBPS](https://docs.voidlinux.org/xbps/index.html)
-
-
 - [AUR](https://wiki.archlinux.org/index.php/Arch_User_Repository)
 - [Flatpak](https://flatpak.org)
 - [Snap](https://snapcraft.io)
@@ -104,6 +104,10 @@ chmod +x bawkpack
 ./bawkpack path/to/packageslist
 ```
 
-> <h1 align="center">Made with ❤️ by <a href="https://github.com/NNBnh"><i>NNB</i></a></h1>
+<br><br><br><br>
+
+---
+
+> <h1 align="center">Made with :heart: by <a href="https://github.com/NNBnh"><i>NNB</i></a></h1>
 >
 > <p align="center"><a href="https://www.buymeacoffee.com/nnbnh"><img src="https://img.shields.io/badge/buy_me_a_coffee%20-%23F7CA88.svg?logo=buy-me-a-coffee&logoColor=333333&style=for-the-badge" alt="Buy Me a Coffee"></p>
