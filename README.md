@@ -12,33 +12,7 @@
 
 This project is just a proof of concept. My desire is for a "One for all" package manager, a package manager wrapper that works on any distro that finds and matches an exact package between the package manager.
 
-Example:
-
-```sh
-bpack install godot
-```
-
-|Package manager|What it's actually run|
-|-|-|
-|[APT](https://wiki.debian.org/Apt)|`apt install godot3`|
-|[AUR](https://wiki.archlinux.org/index.php/Arch_User_Repository)|`yay -Sy godot-bin`|
-|[XBPS](https://docs.voidlinux.org/xbps/index.html)|`xbps-install --sync godot`|
-
-it's package repository will be a `.json` or `.toml` file kile this:
-
-```toml
-[godot]
-description = "An advanced, feature packed, multi-platform 2D and 3D game engine"
-url = "http://www.godotengine.org"
-licenses = "MIT"
-apt = "godot3"
-aur = "godot-bin"
-xbps = "godot"
-
-# ...
-```
-
-People can help add or improve packages on package repository like how [Launchbox](https://gamesdb.launchbox-app.com) manager it database.
+[Learn more here](https://github.com/NNBnh/dots/wiki/todo#backpack)
 
 ###### Hope someone make this dream come true
 
