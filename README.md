@@ -9,7 +9,6 @@
 **Bawkpack** is a *SuperB* packages list installer ~~using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and~~ written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible). **Bawkpack** is exactly [**128** lines of `sh`](https://github.com/NNBnh/superb-bootstrap/blob/master/extra/bawkpack#L128) with [**no dependencies**](#dependencies) (if you don't count `sh`).
 
 ### Purpose
-
 This project is just a proof of concept. My desire is for a "One for all" package manager, a package manager wrapper that works on any distro that finds and matches an exact package between the package manager.
 
 [Learn more here](https://github.com/NNBnh/dots/wiki/todo#backpack)
@@ -17,7 +16,6 @@ This project is just a proof of concept. My desire is for a "One for all" packag
 ###### Hope someone make this dream come true
 
 ## Contents
-
 - [About](#about)
   - [Purpose](#purpose)
 - [Contents](#contents)
@@ -32,7 +30,6 @@ This project is just a proof of concept. My desire is for a "One for all" packag
 ## Setup
 ### Dependencies
 #### Supported package managers
-
 - [APT](https://wiki.debian.org/Apt)
 - [Pacman](https://wiki.archlinux.org/index.php/Pacman)
 - [XBPS](https://docs.voidlinux.org/xbps/index.html)
@@ -59,17 +56,25 @@ Lets take a look at a `packageslist` file example:
 ```
 
 ## Usage
-First `curl` Bawkpack:
+First set `path/to/packageslist`:
+
+```sh
+export BAWKPACK_LIST=path/to/packageslist
+```
+
+then `curl` Bawkpack:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/NNBnh/superb-bootstrap/master/extra/bawkpack | sh
 ```
 
-If you want to use `wget`:
+if you want to use `wget`:
 
 ```sh
 wget -qO - https://raw.githubusercontent.com/NNBnh/superb-bootstrap/master/extra/bawkpack | sh
 ```
+
+this will run `bawkpack` with `path/to/packageslist`.
 
 Bawkpack can also be use locally:
 
