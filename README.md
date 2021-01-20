@@ -62,13 +62,13 @@ Lets take a look at a `packageslist` file example:
 First `curl` Bawkpack:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/NNBnh/bawkpack/master/bawkpack | sh
+curl -fsSL https://raw.githubusercontent.com/NNBnh/superb-bootstrap/master/extra/bawkpack | sh
 ```
 
 If you want to use `wget`:
 
 ```sh
-wget -qO - https://raw.githubusercontent.com/NNBnh/bawkpack/master/bawkpack | sh
+wget -qO - https://raw.githubusercontent.com/NNBnh/superb-bootstrap/master/extra/bawkpack | sh
 ```
 
 Bawkpack can also be use locally:
