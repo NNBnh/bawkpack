@@ -2,8 +2,8 @@
 
 <h1 align="center"><i>Bawkpack</i></h1>
 <p align="center">Packages list installer that <i>SuperB</i></p>
-<p align="center"><img src="https://img.shields.io/github/license/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=for-the-badge" alt="License: GPL-3.0"> <img src="https://img.shields.io/github/languages/top/NNBnh/b.sh?logo=gnu-bash&labelColor=073551&color=4EAA25&logoColor=FFFFFF&style=for-the-badge" alt="Shell: 100%"></p>
-<p align="center"><img src="https://img.shields.io/github/watchers/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/stars/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/forks/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/issues/NNBnh/b.sh?labelColor=073551&color=4EAA25&style=flat-square"></p>
+<p align="center"><img src="https://img.shields.io/github/license/NNBnh/bawkpack?labelColor=073551&color=4EAA25&style=for-the-badge" alt="License: GPL-3.0"> <img src="https://img.shields.io/github/languages/top/NNBnh/bawkpack?logo=gnu-bash&labelColor=073551&color=4EAA25&logoColor=FFFFFF&style=for-the-badge" alt="Shell: 100%"></p>
+<p align="center"><img src="https://img.shields.io/github/watchers/NNBnh/bawkpack?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/stars/NNBnh/bawkpack?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/forks/NNBnh/bawkpack?labelColor=073551&color=4EAA25&style=flat-square"> <img src="https://img.shields.io/github/issues/NNBnh/bawkpack?labelColor=073551&color=4EAA25&style=flat-square"></p>
 
 ## About
 **Bawkpack** is a *SuperB* packages list installer ~~using [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) and~~ written in [`pure sh`](https://github.com/dylanaraps/pure-sh-bible). **Bawkpack** is exactly [**128** lines of `sh`](https://github.com/NNBnh/superb-bootstrap/blob/master/extra/bawkpack#L128) with [**no dependencies**](#dependencies) (if you don't count `sh`).
